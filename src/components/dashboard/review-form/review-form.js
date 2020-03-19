@@ -105,7 +105,7 @@ class ReviewForm extends Form {
     const customFieldsArray = Object.keys(customFields);
 
     return (
-      <div className="container">
+      <div className="col-box">
         <div className="row">
           <div className="col-12 text-center">
             <h2>Create Staff Review</h2>

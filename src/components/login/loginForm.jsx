@@ -6,6 +6,8 @@ import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import Error from "../../common/error";
 
+import "./loginForm.scss";
+
 class LoginForm extends Form {
   state = {
     data: { email: "", password: "" },
@@ -26,7 +28,7 @@ class LoginForm extends Form {
     // call the server
     try {
       const { email, password } = this.state.data;
-      await authService.login(email, password);
+      // await authService.login(email, password);
 
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/";

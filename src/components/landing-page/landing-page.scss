@@ -1,6 +1,52 @@
 $bg-color: gray;
 $bg-primary: rgb(0, 71, 185);
+$red-shade: #FF524F;
+$light-blue: #CDE7FB;
+$dark-blue: #83C3F6;
+$white: #fff;
 
-.bg-color-primary {
-  background-color: $bg-primary;
+
+.col {
+
+    a {
+      background-color: $red-shade;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: 1px solid red;
+      width: 200px;
+      color: $white;
+      margin-left: 4rem;
+    }
+
+}
+
+
+
+
+// .btn:hover {
+//   background-color: #FF524F;
+//   color: #fff;
+// }
+
+
+.sdm-title {
+  text-transform: uppercase;
+  font-size: 80px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.bg-image {
+  background-image: url('sdm-landing.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  width: 50rem;
+  height: 45rem;
+  // padding-top: 250px;
+}
+
+.extra {
+  margin-top: 15vh;
 }

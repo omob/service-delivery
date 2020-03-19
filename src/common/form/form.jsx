@@ -54,7 +54,7 @@ class Form extends Component {
     return (
       <button
         disabled={this.validate()}
-        className="btn btn-primary"
+        className="btn"
         type="submit"
       >
         {label}
@@ -72,6 +72,7 @@ class Form extends Component {
         type={type}
         error={errors[name]}
         onChange={this.handleChange}
+        className="form-input"
       ></Input>
     );
   };

@@ -1,0 +1,54 @@
+.col {
+	display: block;
+	margin: 4rem 0;
+
+	&-img1 {
+		display: block;
+		background: url(./img/createForm.svg) no-repeat top center;
+		width: 10rem;
+		height: 10rem;
+		margin: 1rem auto;
+	}
+
+	&-img2 {
+		display: block;
+		background: url(./img/createForm.svg) no-repeat top center;
+		width: 10rem;
+		height: 10rem;
+		margin: 1rem auto;
+	}
+
+	&-img3 {
+		display: block;
+		background: url(./img/createForm.svg) no-repeat top center;
+		width: 10rem;
+		height: 10rem;
+		margin: 1rem auto;
+	}
+
+	&-img4 {
+		display: block;
+		background: url(./img/viewForm.svg) no-repeat top center;
+		width: 10rem;
+		height: 10rem;
+		margin: 1rem auto;
+	}
+
+	&-btn {
+		margin-left: 4rem;
+		background-color: #ff524f;
+		width: 20rem;
+		display: inline-block;
+		font-weight: 400;
+		padding: .375rem .75rem;
+		text-align: center;
+		text-transform: uppercase;
+		color: #fff;
+		border-radius: .3rem;
+
+		&:hover {
+			text-decoration: none;
+			color: darkgrey;
+		}
+	}
+}
