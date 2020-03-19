@@ -6,6 +6,8 @@ import logger from "./services/logService";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import './style.css';
+
 logger.init();
 
 ReactDOM.render(

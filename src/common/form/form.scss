@@ -1,0 +1,23 @@
+.form-input {
+	width: 30rem;
+	border-radius: 1rem;
+	text-align: center;
+}
+
+button {
+	margin-left: 4rem;
+	background-color: #ff524f;
+	width: 20rem;
+	display: inline-block;
+	font-weight: 400;
+	padding: .375rem .75rem;
+	text-align: center;
+	text-transform: uppercase;
+	color: #fff;
+	border-radius: .3rem;
+
+	&:hover {
+		text-decoration: none;
+		color: darkgrey;
+	}
+}

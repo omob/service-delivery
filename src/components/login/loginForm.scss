@@ -1,0 +1,22 @@
+.col-box {
+    margin: 0 auto;
+    width: 60rem;
+    height: 70vh;
+    margin-top: 15vh;
+    background-color: #CDE7FB;
+}
+
+.login-banner {
+    background: url('./welcome.svg') no-repeat center top;
+    background-size: contain;
+    width: 50rem;
+    height: 20rem;
+    display: block;
+    // border: 1px solid black;
+    margin-left: 5rem;
+}
+
+form {
+    margin: 2.5rem auto;
+    text-align: center;
+}

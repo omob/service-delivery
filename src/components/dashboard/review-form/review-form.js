@@ -23,7 +23,7 @@ class ReviewForm extends Form {
 
   render() {
     return (
-      <div className="container">
+      <div className="col-box">
         <div className="row">
           <div className="col-8">
             <h2>Create Staff Review</h2>

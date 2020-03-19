@@ -1,0 +1,26 @@
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+html {
+	font-size: 62.5%;
+}
+/* 
+.btn {
+   background-color: #FF524F;
+   height: 3rem;
+   text-align: center;
+   align-items: center;
+}  */
+
+.col-box {
+	margin: 0 auto;
+	width: 60rem;
+	height: 70vh;
+	margin-top: 15vh;
+	background-color: #cde7fb;
+}

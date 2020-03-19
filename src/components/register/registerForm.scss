@@ -1,0 +1,34 @@
+.col-box {
+    margin: 0 auto;
+    width: 60rem;
+    height: 70vh;
+    margin-top: 15vh;
+    background-color: #CDE7FB;
+}
+
+.reg-img {
+    position: relative;
+    background: url('./registration.svg') no-repeat center top;
+    height: 20rem;
+    width: 50rem;
+    display: block;
+    background-size: contain;
+    // border: 1px solid black;
+    margin-left: 5rem;
+}
+
+.header-sdm {
+    text-align: center;
+    margin: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #999696;
+}
+
+// .form-input {
+// 	width: 30rem;
+//     border: 1px solid #83c3f6;
+//     border-radius: .3rem;
+//     height: 3rem;
+//     text-align: center;
+// }
