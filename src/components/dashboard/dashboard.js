@@ -14,8 +14,8 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="col">
-          <Link className="btn" to="">
-            Create Form
+          <Link className="btn" to="/staffs/new">
+            Create Staff Profile
           </Link>
         </div>
       </div>

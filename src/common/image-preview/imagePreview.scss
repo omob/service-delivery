@@ -1,0 +1,13 @@
+.image-preview {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #dddddd;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .image-preview-text {
+    text-align: center;
+  }
+}

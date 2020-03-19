@@ -4,6 +4,7 @@ import Form from "../../common/form/form";
 import authService from "../../services/authService";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
+import Error from "../../common/error";
 
 class LoginForm extends Form {
   state = {
@@ -39,7 +40,7 @@ class LoginForm extends Form {
     }
   };
 
-  handleOnchange = e => {
+  handleOnchange = () => {
     const errors = { ...this.state.errors };
     if (errors.login) {
       delete errors.login;
@@ -54,9 +55,8 @@ class LoginForm extends Form {
     return (
       <div className="col-5">
         <h2 className="pb-3">Login</h2>
-        {errors.login && (
-          <div className="alert alert-danger">{errors.login}</div>
-        )}
+        {errors.login && <Error message={errors.login} />}
+
         <form onSubmit={this.handleSubmit} onChange={this.handleOnchange}>
           {this.renderInput("email", "Email", "email")}
           {this.renderInput("password", "Password", "password")}

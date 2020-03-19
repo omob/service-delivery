@@ -5,6 +5,7 @@ import logger from "./services/logService";
 
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.css";
 
 logger.init();
 
