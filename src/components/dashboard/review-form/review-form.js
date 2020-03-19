@@ -161,7 +161,7 @@ class ReviewForm extends Form {
                   ))}
                 </div>
               )}
-              {this.renderButton("Sign In")}
+              {this.renderButton("Create")}
             </form>
           </div>
         </div>

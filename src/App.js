@@ -24,36 +24,34 @@ const App = () => {
   return (
     <Fragment>
       <Navbar user={user} />
-      <div className="container-fluid p-4">
-        <Switch>
-          <Route path="/login" component={LoginForm}></Route>
-          <Route path="/logout" component={Logout}></Route>
-          <Route path="/register" component={RegisterForm}></Route>
-          <ProtectedRoute
-            path="/dashboard"
-            component={Dashboard}
-          ></ProtectedRoute>
-          <ProtectedRoute
-            path="/review-form"
-            component={ReviewForm}
-          ></ProtectedRoute>
-          <ProtectedRoute
-            path="/staffs/new"
-            component={StaffProfileForm}
-          ></ProtectedRoute>
-          <ProtectedRoute
-            path="/staffs/:id"
-            component={StaffProfile}
-          ></ProtectedRoute>
-          <ProtectedRoute path="/staffs" component={Staffs}></ProtectedRoute>
+      <Switch>
+        <Route path="/login" component={LoginForm}></Route>
+        <Route path="/logout" component={Logout}></Route>
+        <Route path="/register" component={RegisterForm}></Route>
+        <ProtectedRoute
+          path="/dashboard"
+          component={Dashboard}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/review-form"
+          component={ReviewForm}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/staffs/new"
+          component={StaffProfileForm}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/staffs/:id"
+          component={StaffProfile}
+        ></ProtectedRoute>
+        <ProtectedRoute path="/staffs" component={Staffs}></ProtectedRoute>
 
-          <ProtectedRoute path="/reports" component={Reports}></ProtectedRoute>
-          <Route path="/home" component={LandingPage}></Route>
-          <Route path="/not-found" component={NotFound}></Route>
-          <Redirect from="/" exact to="/home"></Redirect>
-          <Redirect to="/not-found"></Redirect>
-        </Switch>
-      </div>
+        <ProtectedRoute path="/reports" component={Reports}></ProtectedRoute>
+        <Route path="/home" component={LandingPage}></Route>
+        <Route path="/not-found" component={NotFound}></Route>
+        <Redirect from="/" exact to="/home"></Redirect>
+        <Redirect to="/not-found"></Redirect>
+      </Switch>
     </Fragment>
   );
 };

@@ -28,7 +28,7 @@ class LoginForm extends Form {
     // call the server
     try {
       const { email, password } = this.state.data;
-      // await authService.login(email, password);
+      await authService.login(email, password);
 
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/";
