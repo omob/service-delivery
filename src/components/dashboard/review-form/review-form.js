@@ -1,11 +1,13 @@
 import Joi from "joi-browser";
-import React from "react";
+import React, { Fragment } from "react";
 import Form from "../../../common/form/form";
 import ImagePreview from "../../../common/image-preview/image-preview";
 import RatingStar from "../../../common/rating-star/rating-star";
 
 import staffService from "../../../services/staffService";
 import "./ReviewForm.scss";
+import Error from "../../../common/error";
+import { Link } from "react-router-dom";
 
 class ReviewForm extends Form {
   state = {
@@ -16,7 +18,8 @@ class ReviewForm extends Form {
     customFieldForm: {
       fieldName: ""
     },
-    isToggled: false
+    isToggled: false,
+    submittedForm: null
   };
 
   schema = {
@@ -83,13 +86,38 @@ class ReviewForm extends Form {
 
   doSubmit = async () => {
     // call the server
-    const { customFields, data } = this.state;
 
-    const { result } = await staffService.addStaffReview({
-      ...data,
-      ratings: { ...customFields }
-    });
-    console.log(result);
+    try {
+      const { customFields, data } = this.state;
+      const { data: result } = await staffService.addStaffReview({
+        ...data,
+        ratings: { ...customFields }
+      });
+
+      this.setState({ isSubmitted: true, submittedForm: result });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.error = ex.response.data;
+
+        this.setState({ errors, isSubmitted: false });
+      }
+    }
+  };
+
+  formSubmitted = () => {
+    const { submittedForm } = this.state;
+
+    return (
+      <div className="col-box">
+        <p>
+          Success creating review form, Click the generated link to preview.
+          <Link to={"/review-form/preview/" + submittedForm.report._id}>
+            Click here
+          </Link>
+        </p>
+      </div>
+    );
   };
 
   render() {
@@ -98,74 +126,92 @@ class ReviewForm extends Form {
       staffs,
       isToggled,
       customFieldForm,
-      customFields
+      customFields,
+      errors,
+      isSubmitted
     } = this.state;
 
     const toggleClass = isToggled ? "fa fa-caret-up" : "fa fa-caret-down";
     const customFieldsArray = Object.keys(customFields);
 
     return (
-      <div className="col-box">
-        <div className="row">
-          <div className="col-12 text-center">
-            <h2>Create Staff Review</h2>
-          </div>
-          <ImagePreview />
-        </div>
+      <Fragment>
+        {isSubmitted && this.formSubmitted()}
 
-        <div className="row">
-          <div className="col-12 text-right">
-            <button
-              className="btn btn-primary"
-              onClick={this.toggleCustomField}
-            >
-              <i className={toggleClass}></i>
-              &nbsp; Add Field
-            </button>
+        {!isSubmitted && (
+          <div className="col-box">
+            <div className="row">
+              {errors && errors.error && <Error message={errors.error} />}
 
-            {isToggled && (
-              <div className="col-12 mt-2">
-                <form onSubmit={this.handleAddCustomField}>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Form field"
-                    required
-                    value={customFieldForm.fieldName}
-                    onChange={this.handleCustomFieldChange}
-                  />
-                  <button className="btn btn-primary mt-2 col-3">Add</button>
+              <div className="col-12 text-center">
+                <h2>Create Staff Review</h2>
+              </div>
+              <ImagePreview />
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <h3></h3>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12 text-right">
+                <button
+                  className="btn btn-primary"
+                  onClick={this.toggleCustomField}
+                >
+                  <i className={toggleClass}></i>
+                  &nbsp; Add Field
+                </button>
+
+                {isToggled && (
+                  <div className="col-12 mt-2">
+                    <form onSubmit={this.handleAddCustomField}>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Form field"
+                        required
+                        value={customFieldForm.fieldName}
+                        onChange={this.handleCustomFieldChange}
+                      />
+                      <button className="btn btn-primary mt-2 col-3">
+                        Add
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+              <div className="col">
+                <form onSubmit={this.handleSubmit}>
+                  {this.renderSelect("staffId", "Staff", staffs, data.staffId)}
+                  {this.renderInput("client", "Client")}
+
+                  {customFieldsArray.length > 0 && (
+                    <div className="RatingsDiv">
+                      <h4>Ratings</h4>
+                      <p>What to rate</p>
+                      {customFieldsArray.map(field => (
+                        <div key={field}>
+                          {field} &nbsp;
+                          <RatingStar
+                            className="ml-2"
+                            size={5}
+                            isClickable={false}
+                          />
+                          {/* {this.renderInput(field.toLowerCase(), field)} */}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {this.renderButton("Create")}
                 </form>
               </div>
-            )}
+            </div>
           </div>
-          <div className="col">
-            <form onSubmit={this.handleSubmit}>
-              {this.renderSelect("staffId", "Staff", staffs, data.staffId)}
-              {this.renderInput("client", "Client")}
-
-              {customFieldsArray.length > 0 && (
-                <div className="RatingsDiv">
-                  <h4>Ratings</h4>
-                  <p>What to rate</p>
-                  {customFieldsArray.map(field => (
-                    <p key={field}>
-                      {field} &nbsp;
-                      <RatingStar
-                        className="ml-2"
-                        size={5}
-                        isClickable={false}
-                      />
-                      {/* {this.renderInput(field.toLowerCase(), field)} */}
-                    </p>
-                  ))}
-                </div>
-              )}
-              {this.renderButton("Create")}
-            </form>
-          </div>
-        </div>
-      </div>
+        )}
+      </Fragment>
     );
   }
 }
