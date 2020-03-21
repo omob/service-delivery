@@ -9,18 +9,43 @@
 html {
 	font-size: 62.5%;
 }
-/* 
-.btn {
-   background-color: #FF524F;
-   height: 3rem;
-   text-align: center;
-   align-items: center;
-}  */
+
+.btn,
+button:not(:disabled),
+[type=submit]:not(:disabled) {
+	background-color: #ff524f;
+	height: 3rem;
+	text-align: center;
+	align-items: center;
+	font-size: 1.6rem;
+	padding-top: 1rem;
+	width: 20rem;
+	color: #fff;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 1rem;
+}
+
+.btn:disabled {
+	opacity: .65;
+	width: 20rem;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 1rem;
+}
 
 .col-box {
-	margin: 0 auto;
+	margin: 10vh auto;
 	width: 60rem;
-	height: 70vh;
-	margin-top: 15vh;
+	height: 75vh;
 	background-color: #cde7fb;
+	box-shadow: 6px 6px 16px rgba(0, 0, 0, .5);
+	padding: 5rem 0 0 0;
+}
+
+@media(max-width: 1024px) {
+	.col-box {
+		margin: 5vh 0;
+	}
 }
