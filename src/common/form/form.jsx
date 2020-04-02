@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "../input/input";
 import Select from "../select/select";
+import TextArea from "../text-area/text-area";
 
 class Form extends Component {
   state = {
@@ -52,11 +53,7 @@ class Form extends Component {
 
   renderButton = (label = "Submit") => {
     return (
-      <button
-        disabled={this.validate()}
-        className="btn"
-        type="submit"
-      >
+      <button disabled={this.validate()} className="btn" type="submit">
         {label}
       </button>
     );
@@ -89,6 +86,27 @@ class Form extends Component {
         onChange={this.handleChange}
       ></Select>
     );
+  };
+
+  renderTextArea = (name, label, showLabel = true) => {
+    const { data, errors } = this.state;
+    return (
+      <TextArea
+        name={name}
+        value={data[name]}
+        label={label}
+        error={errors[name]}
+        showLabel={showLabel}
+        onChange={this.handleTextAreaChange}
+      />
+    );
+  };
+
+  handleTextAreaChange = ({ currentTarget: input }) => {
+    const data = { ...this.state.data };
+    data[input.name] = input.value;
+
+    this.setState({ data });
   };
 }
 

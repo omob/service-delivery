@@ -38,11 +38,11 @@ class ReviewForm extends Form {
   populateStaffs = async () => {
     const { data } = await staffService.getStaffs();
     this.setState({
-      staffs: [{ _id: "", name: "" }, ...this.mapToSelectInput(data)]
+      staffs: [{ _id: "", name: "" }, ...this.mapStaffsToSelectInput(data)]
     });
   };
 
-  mapToSelectInput = staffs => {
+  mapStaffsToSelectInput = staffs => {
     return staffs.map(({ _id, name, imageUrl }) => {
       return {
         _id,
@@ -84,6 +84,25 @@ class ReviewForm extends Form {
     });
   };
 
+  // Displays after user submits the form
+  formSubmitted = () => {
+    const { submittedForm } = this.state;
+    return (
+      <div className="col-box">
+        <p>
+          Success creating review form, Click the generated link to preview.
+          <Link
+            to={{
+              pathname: `/review-form/preview/${submittedForm._id}?reviewId=${submittedForm.report._id}`
+            }}
+          >
+            Click here
+          </Link>
+        </p>
+      </div>
+    );
+  };
+
   doSubmit = async () => {
     // call the server
 
@@ -105,21 +124,6 @@ class ReviewForm extends Form {
     }
   };
 
-  formSubmitted = () => {
-    const { submittedForm } = this.state;
-
-    return (
-      <div className="col-box">
-        <p>
-          Success creating review form, Click the generated link to preview.
-          <Link to={"/review-form/preview/" + submittedForm.report._id}>
-            Click here
-          </Link>
-        </p>
-      </div>
-    );
-  };
-
   render() {
     const {
       data,
@@ -136,6 +140,7 @@ class ReviewForm extends Form {
 
     return (
       <Fragment>
+        {/* View to display when user submits  */}
         {isSubmitted && this.formSubmitted()}
 
         {!isSubmitted && (
@@ -147,12 +152,6 @@ class ReviewForm extends Form {
                 <h2>Create Staff Review</h2>
               </div>
               <ImagePreview />
-            </div>
-
-            <div className="row">
-              <div className="col">
-                <h3></h3>
-              </div>
             </div>
 
             <div className="row">

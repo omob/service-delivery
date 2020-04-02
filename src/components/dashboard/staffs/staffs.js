@@ -20,7 +20,10 @@ class Staffs extends Component {
     return (
       <div>
         <h1>Staffs</h1>
-
+        <Link className="col-btn" to="/staffs/new">
+           Add New Staff
+          </Link>
+        {staffs.length > 0 && 
         <table className="table">
           <thead>
             <tr>
@@ -51,7 +54,10 @@ class Staffs extends Component {
             ))}
           </tbody>
         </table>
-      </div>
+  
+                 }
+        {staffs.length === 0 && <p>You have not added any staff yet. Add Staffs to proceed</p>}
+                      </div>
     );
   }
 }

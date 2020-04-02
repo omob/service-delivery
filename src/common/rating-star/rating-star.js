@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { Component, Fragment } from "react";
+//interface - size, rating
 
 class RatingStar extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class RatingStar extends Component {
   };
 
   handleClick = id => {
+    this.props.onChange(id);
     this.setState({ ratings: this.handleStarPopulate(id), rating: id });
   };
 
@@ -51,19 +53,23 @@ class RatingStar extends Component {
 
   render() {
     const { ratings } = this.state;
+    const { onChange } = this.props;
+
     return (
       <Fragment>
-        <div className="ratingStars">
+        <span className="ml-2 ratingStars">
           {ratings.map(({ id, isChecked }) => (
             <i
               key={id}
               onClick={() => {
-                if (this.props.isClickable) this.handleClick(id);
+                if (this.props.isClickable) {
+                  this.handleClick(id);
+                }
               }}
               className={isChecked ? "fa fa-star" : "fa fa-star-o"}
             ></i>
           ))}
-        </div>
+        </span>
       </Fragment>
     );
   }

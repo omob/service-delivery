@@ -14,6 +14,8 @@ import NotFound from "./components/not-found/not-found";
 import RegisterForm from "./components/register/registerForm";
 import authService from "./services/authService";
 import StaffProfile from "./components/dashboard/staff-profile/staff-profile";
+import StaffPreview from "./components/dashboard/staff-preview/staff-preview";
+import GeneratedLink from "./components/dashboard/generated-link/generatedLink";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -31,6 +33,14 @@ const App = () => {
         <ProtectedRoute
           path="/dashboard"
           component={Dashboard}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/review-form/link"
+          component={GeneratedLink}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/review-form/preview/:id"
+          component={StaffPreview}
         ></ProtectedRoute>
         <ProtectedRoute
           path="/review-form"

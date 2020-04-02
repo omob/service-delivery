@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import ImagePreview from "../../../common/image-preview/image-preview";
 import staffService from "../../../services/staffService";
+import RatingStar from "../../../common/rating-star/rating-star";
 
 const StaffProfile = ({ match }) => {
   const [staff, setStaff] = useState(null);
@@ -17,6 +18,24 @@ const StaffProfile = ({ match }) => {
   const getFullName = () => {
     const { name } = staff;
     return name.firstName + " " + name.lastName;
+  };
+
+  const getReports = () => {
+    const { reports } = staff;
+    const [report] = reports;
+    return report.reports || [];
+  };
+
+  const getRatings = ratings => {
+    if (ratings) {
+      const totalRating = Object.values(ratings)
+        .map(rating => parseInt(rating) || 0)
+        .reduce((a, b) => a + b);
+
+      return totalRating / Object.values(ratings).length;
+    }
+
+    return 0;
   };
 
   return (
@@ -49,23 +68,20 @@ const StaffProfile = ({ match }) => {
                   )}
                 </tr>
               </thead>
-              {/* <tbody>
-            {staffs.map(staff => (
-              <tr key={staff._id}>
-                <th scope="row">
-                  {staff.name.firstName} {staff.name.lastName}
-                </th>
-                <td>{staff.role}</td>
-                <td>{staff.ratings}</td>
-                <td>
-                  <Link className="btn btn-primary" to={"/staffs/" + staff._id}>
-                    {" "}
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody> */}
+              <tbody>
+                {getReports().map(report => (
+                  <tr key={report._id}>
+                    <th scope="row">{report.client}</th>
+                    <td>
+                      <RatingStar
+                        rating={getRatings(report.ratings)}
+                      ></RatingStar>
+                    </td>
+                    <td></td>
+                    <td>{new Date(report.created).toDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </Fragment>
