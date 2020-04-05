@@ -1,13 +1,11 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import queryString from "query-string";
+import Form from "../../common/form/form";
+import ImagePreview from "../../common/image-preview/image-preview";
+import RatingStar from "../../common/rating-star/rating-star";
+import reviewService from "../../services/reviewService";
 
-import Form from "../../../common/form/form";
-import ImagePreview from "../../../common/image-preview/image-preview";
-import RatingStar from "../../../common/rating-star/rating-star";
-import reviewService from "../../../services/reviewService";
-
-class StaffPreview extends Form {
+class ClientStaffView extends Form {
   state = {
     reports: "",
     staff: "",
@@ -44,9 +42,9 @@ class StaffPreview extends Form {
   handleRatingsChange = (selectedRate, index) => {
     const reports = { ...this.state.reports };
     const { report } = reports;
-    const ratingsToArray = Object.keys(report.ratings);
+    const ratingsToArray = Object.keys(report.ratings.rating);
 
-    report.ratings[ratingsToArray[index]] = selectedRate;
+    report.ratings.rating[ratingsToArray[index]] = selectedRate;
 
     reports.report = report;
 
@@ -63,8 +61,25 @@ class StaffPreview extends Form {
     );
     const { link } = data;
 
-    // console.log(link);
     this.props.history.push(`/review-form/generated-link?url=${link}`);
+  };
+
+  doSubmit = async () => {
+    const { match, location, history } = this.props;
+    const { reviewId } = queryString.parse(location.search);
+
+    const { data, ratings } = this.state;
+    ratings.review = data.review;
+
+    console.log(ratings);
+
+    const { result } = await reviewService.updateReview({
+      reportId: match.params.id,
+      reviewId,
+      ratings
+    });
+
+    history.push("/form-submitted");
   };
 
   render() {
@@ -75,7 +90,7 @@ class StaffPreview extends Form {
         {error && <p>{error}</p>}
         {!error && (
           <div className="text-center">
-            <h2>Staff Preview</h2>
+            <h2>Staff Rating</h2>
             <ImagePreview />
             <h3>{staff.fullname}</h3>
             <p>{staff.role}</p>
@@ -90,6 +105,7 @@ class StaffPreview extends Form {
                     <RatingStar
                       size={5}
                       rating={report[1]}
+                      isClickable={true}
                       onChange={e => this.handleRatingsChange(e, index)}
                     />
                   </p>
@@ -98,16 +114,9 @@ class StaffPreview extends Form {
               <hr></hr>
 
               <div className="form-group">
-                <button className="btn btn-primary">Make Changes</button>
-                <button
-                  className="btn btn-danger ml-2"
-                  onClick={this.handleGenerateLink}
-                >
-                  Generate Link
+                <button className="btn btn-primary" onClick={this.doSubmit}>
+                  Submit
                 </button>
-                {/* <Link to="/review-form/link" className="btn btn-danger ml-2">
-              Generate Link
-            </Link> */}
               </div>
             </div>
           </div>
@@ -117,4 +126,4 @@ class StaffPreview extends Form {
   }
 }
 
-export default StaffPreview;
+export default ClientStaffView;

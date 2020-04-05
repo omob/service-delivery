@@ -11,6 +11,34 @@ const getReview = (id, reviewId) => {
   });
 };
 
+const updateReview = ({ reportId: id, reviewId, ratings }) => {
+  return http.put(
+    `${apiEndPoint}/${id}`,
+    { ratings },
+    {
+      params: {
+        reviewId
+      }
+    }
+  );
+};
+
+const updateReviewWithLink = (id, reviewId) => {
+  const link = `${id}?reviewId=${reviewId}`;
+
+  return http.put(
+    `${apiEndPoint}/${id}`,
+    { link },
+    {
+      params: {
+        reviewId
+      }
+    }
+  );
+};
+
 export default {
-  getReview
+  getReview,
+  updateReview,
+  updateReviewWithLink
 };

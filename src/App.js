@@ -16,6 +16,8 @@ import authService from "./services/authService";
 import StaffProfile from "./components/dashboard/staff-profile/staff-profile";
 import StaffPreview from "./components/dashboard/staff-preview/staff-preview";
 import GeneratedLink from "./components/dashboard/generated-link/generatedLink";
+import ClientStaffView from "./components/client-view/client-staffview";
+import FormSubmitted from "./components/client-view/form-submitted";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -35,7 +37,7 @@ const App = () => {
           component={Dashboard}
         ></ProtectedRoute>
         <ProtectedRoute
-          path="/review-form/link"
+          path="/review-form/generated-link"
           component={GeneratedLink}
         ></ProtectedRoute>
         <ProtectedRoute
@@ -46,6 +48,10 @@ const App = () => {
           path="/review-form"
           component={ReviewForm}
         ></ProtectedRoute>
+        {/* to handle client ratings form */}
+        /form-submitted
+        <Route path="/review/:id" component={ClientStaffView}></Route>
+        <Route path="/form-submitted" component={FormSubmitted}></Route>
         <ProtectedRoute
           path="/staffs/new"
           component={StaffProfileForm}
@@ -55,7 +61,6 @@ const App = () => {
           component={StaffProfile}
         ></ProtectedRoute>
         <ProtectedRoute path="/staffs" component={Staffs}></ProtectedRoute>
-
         <ProtectedRoute path="/reports" component={Reports}></ProtectedRoute>
         <Route path="/home" component={LandingPage}></Route>
         <Route path="/not-found" component={NotFound}></Route>

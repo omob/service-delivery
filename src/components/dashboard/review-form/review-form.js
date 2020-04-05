@@ -90,7 +90,7 @@ class ReviewForm extends Form {
     return (
       <div className="col-box">
         <p>
-          Success creating review form, Click the generated link to preview.
+          Success creating review form, Click here to preview.
           <Link
             to={{
               pathname: `/review-form/preview/${submittedForm._id}?reviewId=${submittedForm.report._id}`

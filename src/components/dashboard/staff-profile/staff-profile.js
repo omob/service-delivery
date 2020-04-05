@@ -26,13 +26,14 @@ const StaffProfile = ({ match }) => {
     return report.reports || [];
   };
 
-  const getRatings = ratings => {
+  const getAverageRating = ratings => {
     if (ratings) {
-      const totalRating = Object.values(ratings)
+      const ratingsArray = Object.values(ratings);
+      const totalRating = ratingsArray
         .map(rating => parseInt(rating) || 0)
         .reduce((a, b) => a + b);
 
-      return totalRating / Object.values(ratings).length;
+      return totalRating / ratingsArray.length;
     }
 
     return 0;
@@ -74,7 +75,7 @@ const StaffProfile = ({ match }) => {
                     <th scope="row">{report.client}</th>
                     <td>
                       <RatingStar
-                        rating={getRatings(report.ratings)}
+                        rating={getAverageRating(report.ratings)}
                       ></RatingStar>
                     </td>
                     <td></td>
