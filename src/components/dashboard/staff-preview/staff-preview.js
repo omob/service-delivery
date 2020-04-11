@@ -61,7 +61,6 @@ class StaffPreview extends Form {
     );
     const { link } = data;
 
-    // console.log(link);
     this.props.history.push(`/review-form/generated-link?url=${link}`);
   };
 

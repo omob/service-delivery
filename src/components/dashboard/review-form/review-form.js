@@ -97,8 +97,9 @@ class ReviewForm extends Form {
           Success creating review form, Click here to preview.
           <Link
             to={{
-              pathname: `/review-form/preview/${submittedForm._id}?reviewId=${submittedForm.report._id}`,
+              pathname: `/review-form/preview/${submittedForm._id}`,
               state: passState,
+              search: `reviewId=${submittedForm.report._id}`,
             }}
           >
             Click here
