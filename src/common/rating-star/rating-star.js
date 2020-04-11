@@ -53,7 +53,7 @@ class RatingStar extends Component {
 
   render() {
     const { ratings } = this.state;
-    const { onChange } = this.props;
+    // const { onChange } = this.props;
 
     return (
       <Fragment>

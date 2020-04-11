@@ -18,7 +18,7 @@ import StaffPreview from "./components/dashboard/staff-preview/staff-preview";
 import GeneratedLink from "./components/dashboard/generated-link/generatedLink";
 import ClientStaffView from "./components/client-view/client-staffview";
 import FormSubmitted from "./components/client-view/form-submitted";
-
+ 
 const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
