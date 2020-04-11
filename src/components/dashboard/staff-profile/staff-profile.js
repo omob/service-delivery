@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import ImagePreview from "../../../common/image-preview/image-preview";
 import staffService from "../../../services/staffService";
 import RatingStar from "../../../common/rating-star/rating-star";
+import './staff-profile.scss'
 
 const StaffProfile = ({ match }) => {
   const [staff, setStaff] = useState(null);
@@ -41,7 +42,8 @@ const StaffProfile = ({ match }) => {
 
   return (
     <Fragment>
-      <h2>Staff Profile</h2>
+      <div className="col-box">
+      <h2 className="u-center">Staff Profile</h2>
       {staff && (
         <Fragment>
           <div className="col-12 text-center">
@@ -50,11 +52,28 @@ const StaffProfile = ({ match }) => {
               <h3> {getFullName()}</h3>
               <span> {staff.role}</span>
             </div>
-            <div className="col-8">
+            <hr />
+            {/* <div className="col-8">
               <div className="col-3">Outings- {staff.outings}</div>
               <div className="col-3">Reviews - {staff.reviews}</div>
               <div className="col-3">Avg. Ratings - {staff.averageRating}</div>
+            </div> */}
+            <div className="u-center">
+              <table className="sfProfileStat">
+                <tr className="tspacei">
+                  <th>Outings</th>
+                  <th>Reviews</th>
+                  <th>Avg. Ratings</th>
+                </tr>
+                <tr className="tspacei">
+                  <td>{staff.outings}</td>
+                  <td>{staff.reviews}</td>
+                  <td>{staff.averageRating}</td>
+                </tr>
+              </table>
             </div>
+
+            <hr />
           </div>
           <div className="mt-3">
             <table className="table">
@@ -85,10 +104,12 @@ const StaffProfile = ({ match }) => {
               </tbody>
             </table>
           </div>
+          
         </Fragment>
       )}
 
       {!staff && <p>Could not load staff info</p>}
+      </div>
     </Fragment>
   );
 };

@@ -60,7 +60,7 @@ class StaffProfileForm extends Form {
   render() {
     const { errors, data } = this.state;
     return (
-      <div className="col-12">
+      <div className="col-box">
         <h2 className="text-center"> Create Staff Profile </h2>
         {errors.data && <Error message={errors.data} />}
         <ImagePreview imageSrc="" alt={data.firstName} />

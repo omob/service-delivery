@@ -55,7 +55,7 @@ class LoginForm extends Form {
 
     const { errors } = this.state;
     return (
-      <div className="col-5">
+      <div className="col-box">
         <h2 className="pb-3">Login</h2>
         {errors.login && <Error message={errors.login} />}
 
