@@ -7,7 +7,7 @@ import TextArea from "../text-area/text-area";
 class Form extends Component {
   state = {
     data: {},
-    error: {}
+    error: {},
   };
 
   validate = () => {
@@ -27,7 +27,7 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
@@ -74,7 +74,7 @@ class Form extends Component {
     );
   };
 
-  renderSelect = (name, label, data, value = "") => {
+  renderSelect = (name, label, data, value = "", disabled = false) => {
     const { errors } = this.state;
     return (
       <Select
@@ -84,6 +84,7 @@ class Form extends Component {
         value={value}
         error={errors[name]}
         onChange={this.handleChange}
+        disabled={disabled}
       ></Select>
     );
   };

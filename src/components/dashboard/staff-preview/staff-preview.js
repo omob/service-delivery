@@ -12,12 +12,16 @@ class StaffPreview extends Form {
     reports: "",
     staff: "",
     data: {
-      review: ""
+      review: "",
     },
-    errors: {}
+    errors: {},
   };
 
   async componentDidMount() {
+    this.handleGetReview();
+  }
+
+  handleGetReview = async () => {
     const { match, location } = this.props;
     const { reviewId } = queryString.parse(location.search);
 
@@ -26,20 +30,14 @@ class StaffPreview extends Form {
       this.setState({
         reports: data,
         staff: data.staff,
-        ratings: data.report.ratings
+        ratings: data.report.ratings,
       });
     } catch (error) {
-      if (error.response && error.response.status) {
-        console.log(error);
-      }
-
-      console.log(error);
-
       const errors = { ...this.state.errors };
       errors.error = "Something happened, try again later.";
       this.setState({ errors });
     }
-  }
+  };
 
   handleRatingsChange = (selectedRate, index) => {
     const reports = { ...this.state.reports };
@@ -67,6 +65,13 @@ class StaffPreview extends Form {
     this.props.history.push(`/review-form/generated-link?url=${link}`);
   };
 
+  handleMakeChanges = () => {
+    this.props.history.push({
+      pathname: "/review-form",
+      state: this.props.location.state,
+    });
+  };
+
   render() {
     const { staff, ratings, errors } = this.state;
     const { error } = errors;
@@ -90,7 +95,7 @@ class StaffPreview extends Form {
                     <RatingStar
                       size={5}
                       rating={report[1]}
-                      onChange={e => this.handleRatingsChange(e, index)}
+                      onChange={(e) => this.handleRatingsChange(e, index)}
                     />
                   </p>
                 ))}
@@ -98,16 +103,18 @@ class StaffPreview extends Form {
               <hr></hr>
 
               <div className="form-group">
-                <button className="btn btn-primary">Make Changes</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={this.handleMakeChanges}
+                >
+                  Make Changes
+                </button>
                 <button
                   className="btn btn-danger ml-2"
                   onClick={this.handleGenerateLink}
                 >
                   Generate Link
                 </button>
-                {/* <Link to="/review-form/link" className="btn btn-danger ml-2">
-              Generate Link
-            </Link> */}
               </div>
             </div>
           </div>

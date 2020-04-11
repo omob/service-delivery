@@ -10,34 +10,37 @@ class ClientStaffView extends Form {
     reports: "",
     staff: "",
     data: {
-      review: ""
+      review: "",
     },
-    errors: {}
+    errors: {},
   };
 
   async componentDidMount() {
+    this.handleGetReview();
+  }
+
+  handleGetReview = async () => {
     const { match, location } = this.props;
     const { reviewId } = queryString.parse(location.search);
 
     try {
       const { data } = await reviewService.getReview(match.params.id, reviewId);
+
       this.setState({
         reports: data,
         staff: data.staff,
-        ratings: data.report.ratings
+        ratings: data.report.ratings,
       });
     } catch (error) {
       if (error.response && error.response.status) {
         console.log(error);
       }
 
-      console.log(error);
-
       const errors = { ...this.state.errors };
       errors.error = "Something happened, try again later.";
       this.setState({ errors });
     }
-  }
+  };
 
   handleRatingsChange = (selectedRate, index) => {
     const reports = { ...this.state.reports };
@@ -51,32 +54,17 @@ class ClientStaffView extends Form {
     this.setState({ reports });
   };
 
-  handleGenerateLink = async () => {
-    const { match, location } = this.props;
-    const { reviewId } = queryString.parse(location.search);
-
-    const { data } = await reviewService.updateReviewWithLink(
-      match.params.id,
-      reviewId
-    );
-    const { link } = data;
-
-    this.props.history.push(`/review-form/generated-link?url=${link}`);
-  };
-
   doSubmit = async () => {
     const { match, location, history } = this.props;
     const { reviewId } = queryString.parse(location.search);
 
-    const { data, ratings } = this.state;
+    const { data, ratings } = { ...this.state };
     ratings.review = data.review;
 
-    console.log(ratings);
-
-    const { result } = await reviewService.updateReview({
+    await reviewService.updateReview({
       reportId: match.params.id,
       reviewId,
-      ratings
+      ratings,
     });
 
     history.push("/form-submitted");
@@ -106,7 +94,7 @@ class ClientStaffView extends Form {
                       size={5}
                       rating={report[1]}
                       isClickable={true}
-                      onChange={e => this.handleRatingsChange(e, index)}
+                      onChange={(e) => this.handleRatingsChange(e, index)}
                     />
                   </p>
                 ))}

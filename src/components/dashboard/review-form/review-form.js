@@ -16,43 +16,46 @@ class ReviewForm extends Form {
     errors: {},
     customFields: {},
     customFieldForm: {
-      fieldName: ""
+      fieldName: "",
     },
     isToggled: false,
-    submittedForm: null
+    submittedForm: null,
   };
 
   schema = {
-    staffId: Joi.string()
-      .required()
-      .label("Staff"),
-    client: Joi.string()
-      .required()
-      .label("Client")
+    staffId: Joi.string().required().label("Staff"),
+    client: Joi.string().required().label("Client"),
   };
 
   async componentDidMount() {
+    const { location } = this.props;
+
+    if (location.state) {
+      const state = { ...location.state, editMode: true };
+      return this.setState(state);
+    }
+
     this.populateStaffs();
   }
 
   populateStaffs = async () => {
     const { data } = await staffService.getStaffs();
     this.setState({
-      staffs: [{ _id: "", name: "" }, ...this.mapStaffsToSelectInput(data)]
+      staffs: [{ _id: "", name: "" }, ...this.mapStaffsToSelectInput(data)],
     });
   };
 
-  mapStaffsToSelectInput = staffs => {
+  mapStaffsToSelectInput = (staffs) => {
     return staffs.map(({ _id, name, imageUrl }) => {
       return {
         _id,
         name: name.firstName + " " + name.lastName,
-        imageUrl
+        imageUrl,
       };
     });
   };
 
-  handleAddCustomField = e => {
+  handleAddCustomField = (e) => {
     e.preventDefault();
 
     const { isToggled, customFieldForm, customFields } = this.state;
@@ -66,7 +69,7 @@ class ReviewForm extends Form {
     this.setState({
       customFields: { ...customFields },
       isToggled: !isToggled,
-      customFieldForm
+      customFieldForm,
     });
   };
 
@@ -80,20 +83,22 @@ class ReviewForm extends Form {
   toggleCustomField = () => {
     const isToggled = this.state.isToggled;
     this.setState({
-      isToggled: !isToggled
+      isToggled: !isToggled,
     });
   };
 
   // Displays after user submits the form
   formSubmitted = () => {
     const { submittedForm } = this.state;
+    const { isSubmitted, editMode, ...passState } = this.state;
     return (
       <div className="col-box">
         <p>
           Success creating review form, Click here to preview.
           <Link
             to={{
-              pathname: `/review-form/preview/${submittedForm._id}?reviewId=${submittedForm.report._id}`
+              pathname: `/review-form/preview/${submittedForm._id}?reviewId=${submittedForm.report._id}`,
+              state: passState,
             }}
           >
             Click here
@@ -110,7 +115,7 @@ class ReviewForm extends Form {
       const { customFields, data } = this.state;
       const { data: result } = await staffService.addStaffReview({
         ...data,
-        ratings: { ...customFields }
+        ratings: { ...customFields },
       });
 
       this.setState({ isSubmitted: true, submittedForm: result });
@@ -124,6 +129,13 @@ class ReviewForm extends Form {
     }
   };
 
+  deleteRating = (field) => {
+    const customFields = { ...this.state.customFields };
+    delete customFields[field];
+
+    this.setState({ customFields });
+  };
+
   render() {
     const {
       data,
@@ -132,7 +144,8 @@ class ReviewForm extends Form {
       customFieldForm,
       customFields,
       errors,
-      isSubmitted
+      isSubmitted,
+      editMode,
     } = this.state;
 
     const toggleClass = isToggled ? "fa fa-caret-up" : "fa fa-caret-down";
@@ -184,14 +197,20 @@ class ReviewForm extends Form {
               </div>
               <div className="col">
                 <form onSubmit={this.handleSubmit}>
-                  {this.renderSelect("staffId", "Staff", staffs, data.staffId)}
+                  {this.renderSelect(
+                    "staffId",
+                    "Staff",
+                    staffs,
+                    data.staffId,
+                    editMode
+                  )}
                   {this.renderInput("client", "Client")}
 
                   {customFieldsArray.length > 0 && (
                     <div className="RatingsDiv">
                       <h4>Ratings</h4>
                       <p>What to rate</p>
-                      {customFieldsArray.map(field => (
+                      {customFieldsArray.map((field) => (
                         <div key={field}>
                           {field} &nbsp;
                           <RatingStar
@@ -199,7 +218,11 @@ class ReviewForm extends Form {
                             size={5}
                             isClickable={false}
                           />
-                          {/* {this.renderInput(field.toLowerCase(), field)} */}
+                          <i
+                            className="p-1 pl-2 fa fa-trash"
+                            style={{ color: "red", cursor: "pointer" }}
+                            onClick={() => this.deleteRating(field)}
+                          ></i>
                         </div>
                       ))}
                     </div>
