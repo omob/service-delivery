@@ -28,3 +28,13 @@ html {
 .u-center {
     text-align: center;
 }
+
+.form-control {
+  text-align: center;
+  display: inline-block;
+  width: 30rem;
+  border: 1px solid #83c3f6;
+  border-radius: .3rem;
+  height: 3rem;
+  padding: .1rem .4rem;
+}
